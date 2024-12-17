@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Piyano Uygulaması'),
-        ),
-        body: const PiyanoEkrani(),
-      ),
+      home: const PiyanoEkrani(),
     );
   }
 }
@@ -26,40 +22,61 @@ class PiyanoEkrani extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Ekranın sadece yatay modda görüntülenmesini sağlamak
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
 
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Piyano Uygulaması'),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(7, (index) {
+              final isSharp = [0, 1, 3, 4, 5].contains(index);
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(12, (index) {
-          final isSharp = [1, 2, 4, 5, 6].contains(index % 7);
-
-
-          return Stack(
-            children: [
-              Container(
-                width: 60,
-                height: 200,
-                color: Colors.white,
-                margin: const EdgeInsets.all(1),
-                alignment: Alignment.bottomCenter,
-
-              ),
-              if (isSharp)
-                Positioned(
-                  left: 35,
-                  top: 0,
-                  child: Container(
-                    width: 40,
-                    height: 120,
-                    color: Colors.black,
-                    alignment: Alignment.bottomCenter,
-
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Beyaz tuşa basıldığında yapılacak işlemler
+                      print('Beyaz tuş $index basıldı');
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 200,
+                      color: Colors.white,
+                      margin: const EdgeInsets.all(1),
+                      alignment: Alignment.bottomCenter,
+                    ),
                   ),
-                ),
-            ],
-          );
-        }),
+                  if (isSharp)
+                    Positioned(
+                      left: 35,
+                      top: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          // Siyah tuşa basıldığında yapılacak işlemler
+                          print('Siyah tuş $index basıldı');
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 120,
+                          color: Colors.black,
+                          alignment: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            }),
+          ),
+        ),
       ),
     );
   }
