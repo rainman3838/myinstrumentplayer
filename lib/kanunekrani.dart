@@ -1,45 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-class KanunEkrani extends StatefulWidget {
-  @override
-  _KanunEkraniState createState() => _KanunEkraniState();
+void main() {
+  runApp(KanunEkrani());
 }
 
-class _KanunEkraniState extends State<KanunEkrani> {
-  final AudioPlayer _player = AudioPlayer();
-  final List<String> sesDosyalari = [
-    'assets/sounds/kanunses/1kanunsol.mp3',
-    'assets/sounds/kanunses/2kanunla.mp3',
-    // ... diğer ses dosyaları
-  ];
-
+class KanunEkrani extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/kanun.png'),
-            SizedBox(height: 20),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Her satırda 3 tel
-                ),
-                itemCount: sesDosyalari.length,
-                itemBuilder: (context, index) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      _player.play(AssetSource(sesDosyalari[index]));
-                    },
-                    child: Text(''),
-                  );
-                },
-              ),
-            ),
-          ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Kanun Ekranı"),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Image.asset(
+            'assets/images/imgkanun.jpg', // Resmin yeni yolu
+            fit: BoxFit.contain,          // Resmi ekrana sığdırır
+          ),
         ),
       ),
     );
