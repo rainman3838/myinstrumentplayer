@@ -16,8 +16,11 @@ class KanunEkrani extends StatelessWidget {
         ),
         body: Center(
           child: Image.asset(
-            'assets/images/imgkanun.jpg', // Resmin yeni yolu
-            fit: BoxFit.contain,          // Resmi ekrana sığdırır
+            'assets/images/imgkanun.jpg',
+            width: 900,
+            height: 900,
+            fit: BoxFit.cover,
+
           ),
         ),
       ),
