@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,22 +27,69 @@ class PiyanoEkrani extends StatefulWidget {
 
 class _PiyanoEkraniState extends State<PiyanoEkrani> {
   @override
-  void initState(){
-    super.initState();
+  Widget build(BuildContext context) {
+    // Ekranın sadece yatay modda görüntülenmesini sağlamak
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-  }
+    @override
+    void dispose() {
+      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+      super.dispose();
+    }
 
-  @override
-  void dispose(){
-    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    super.dispose();
-  }
+    final player = AudioPlayer();
 
-  @override
-  Widget build(BuildContext context) {
+    // Beyaz tuşlara atanacak ses dosyaları
+    final List<String> whiteKeySounds = [
+      'assets/do.wav',
+      'assets/re.wav',
+      'assets/mi.wav',
+      'assets/fa.wav',
+      'assets/sol.wav',
+      'assets/la.wav',
+      'assets/si.wav',
+      'assets/do2.wav',
+      'assets/re2.wav',
+      'assets/mi2.wav',
+      'assets/fa2.wav',
+      'assets/sol2.wav',
+      'assets/la2.wav',
+      'assets/si2.wav',
+    ];
+
+    // Siyah tuşlara atanacak ses dosyaları
+    final List<String> blackKeySounds = [
+      'assets/do_sharp.wav',
+      'assets/re_sharp.wav',
+      'assets/fa_sharp.wav',
+      'assets/sol_sharp.wav',
+      'assets/la_sharp.wav',
+      'assets/do_sharp2.wav',
+      'assets/re_sharp2.wav',
+      'assets/fa_sharp2.wav',
+      'assets/sol_sharp2.wav',
+      'assets/la_sharp2.wav',
+    ];
+
+    // Siyah tuşların beyaz tuşlara göre konumu (true = siyah tuş var)
+    final List<bool> isSharpKey = [
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false
+    ];
 
     return Scaffold(
       backgroundColor: Colors.white24,
@@ -54,36 +102,37 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
           scrollDirection: Axis.horizontal,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(7, (index) {
-              final isSharp = [0, 1, 3, 4, 5].contains(index);
+            children: List.generate(14, (index) {
+              final hasSharp = isSharpKey[index];
 
               return Stack(
                 children: [
+                  // Beyaz tuş
                   GestureDetector(
-                    onTap: () {
-                      // Beyaz tuşa basıldığında yapılacak işlemler
-                      print('Beyaz tuş $index basıldı');
+                    onTap: () async {
+                      await player.play(AssetSource(whiteKeySounds[index]));
                     },
                     child: Container(
                       width: 60,
-                      height: 200,
+                      height: 270,
                       color: Colors.white,
-                      margin: const EdgeInsets.all(1),
+                      margin: const EdgeInsets.all(0.5),
                       alignment: Alignment.bottomCenter,
                     ),
                   ),
-                  if (isSharp)
+
+                  // Siyah tuş (Eğer konum uygunsa)
+                  if (hasSharp && index <= 12)
                     Positioned(
-                      left: 35,
+                      left: 30,
                       top: 0,
                       child: GestureDetector(
-                        onTap: () {
-                          // Siyah tuşa basıldığında yapılacak işlemler
-                          print('Siyah tuş $index basıldı');
+                        onTap: () async {
+                          await player.play(AssetSource(blackKeySounds[index]));
                         },
                         child: Container(
-                          width: 40,
-                          height: 120,
+                          width: 50,
+                          height: 160,
                           color: Colors.black,
                           alignment: Alignment.bottomCenter,
                         ),
