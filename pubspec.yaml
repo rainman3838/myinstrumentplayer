@@ -62,6 +62,7 @@ flutter:
     - assets/images/img4.jpg
     - assets/images/imgkanun.jpg
     - assets/sounds/drumses/
+    - assets/sounds/kanunses/
 
 
   # The following line ensures that the Material Icons font is

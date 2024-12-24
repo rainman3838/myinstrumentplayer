@@ -28,35 +28,24 @@ class PiyanoEkrani extends StatefulWidget {
 class _PiyanoEkraniState extends State<PiyanoEkrani> {
   @override
   Widget build(BuildContext context) {
-    // Ekranın sadece yatay modda görüntülenmesini sağlamak
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    @override
-    void dispose() {
-      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-      super.dispose();
-    }
+
 
     final player = AudioPlayer();
 
     // Beyaz tuşlara atanacak ses dosyaları
     final List<String> whiteKeySounds = [
-      'assets/do.wav',
-      'assets/re.wav',
-      'assets/mi.wav',
-      'assets/fa.wav',
-      'assets/sol.wav',
-      'assets/la.wav',
-      'assets/si.wav',
-      'assets/do2.wav',
-      'assets/re2.wav',
-      'assets/mi2.wav',
-      'assets/fa2.wav',
-      'assets/sol2.wav',
-      'assets/la2.wav',
-      'assets/si2.wav',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/kanunses/2kanunla.mp3',
+      'sounds/kanunses/3kanunsi.mp3',
+      'sounds/kanunses/4kanundo.mp3',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/kanunses/1kanunsol.mp3',
+      'sounds/drumses/j.wav',
+      'sounds/drumses/k.wav',
+      'sounds/drumses/l.wav',
     ];
 
     // Siyah tuşlara atanacak ses dosyaları
@@ -90,6 +79,23 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
       true,
       false
     ];
+    @override
+    void initState() {
+      super.initState();
+      // Ekranı yalnızca yatay moda kilitle
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+      ]);
+    }
+
+    @override
+    void dispose() {
+      // Yönlendirmeyi varsayılan ayarına döndür
+      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+      super.dispose();
+    }
+
 
     return Scaffold(
       backgroundColor: Colors.white24,
