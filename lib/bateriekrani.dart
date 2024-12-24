@@ -42,7 +42,16 @@ class DrumPadScreen extends StatelessWidget {
     [Colors.redAccent, Colors.red],
   ];
 
-  final AudioPlayer audioPlayer = AudioPlayer();
+  // Ses dosyasını çalmak için yeni bir AudioPlayer nesnesi oluşturur
+  void playSound(String soundPath) {
+    final player = AudioPlayer();
+    player.play(AssetSource(soundPath));
+
+    // Ses tamamlandığında player'ı serbest bırak
+    player.onPlayerComplete.listen((event) {
+      player.dispose();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +62,6 @@ class DrumPadScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Stack(
-
           alignment: Alignment.center,
           children: [
             // AppBar boyunca içteki dairesel kutu
@@ -95,7 +103,7 @@ class DrumPadScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  audioPlayer.play(AssetSource(soundPaths[index]));
+                  playSound(soundPaths[index]);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -105,9 +113,7 @@ class DrumPadScreen extends StatelessWidget {
                       radius: 0.6,
                     ),
                     borderRadius: BorderRadius.circular(16),
-        
                   ),
-        
                 ),
               );
             },

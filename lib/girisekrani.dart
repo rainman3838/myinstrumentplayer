@@ -80,7 +80,7 @@ class GirisEkrani extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const KalimbaEkrani()),
+                            builder: (context) =>  KalimbaEkrani()),
                       );
                     },
                   ),
