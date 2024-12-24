@@ -71,11 +71,13 @@ class DrumPadScreen extends StatelessWidget {
                 }
               },
               style: ElevatedButton.styleFrom(
+
                 backgroundColor: colors[index],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-              ),
+
+            ),
               child: Text(
                 'Pad ${index + 1}',
                 style: TextStyle(

@@ -17,16 +17,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class PiyanoEkrani extends StatelessWidget {
+class PiyanoEkrani extends StatefulWidget {
   const PiyanoEkrani({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // Ekranın sadece yatay modda görüntülenmesini sağlamak
+  State<PiyanoEkrani> createState() => _PiyanoEkraniState();
+}
+
+class _PiyanoEkraniState extends State<PiyanoEkrani> {
+  @override
+  void initState(){
+    super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+  }
+
+  @override
+  void dispose(){
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.white24,

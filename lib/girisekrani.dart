@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'bateriekrani.dart';
 import 'kalimbaekrani.dart';
@@ -68,7 +69,7 @@ class GirisEkrani extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const BateriEkrani()),
+                            builder: (context) =>  BateriEkrani()),
                       );
                     },
                   ),
@@ -107,6 +108,7 @@ class InstrumentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: onTap,
       child: Card(
