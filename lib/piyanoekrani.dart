@@ -27,39 +27,59 @@ class PiyanoEkrani extends StatefulWidget {
 
 class _PiyanoEkraniState extends State<PiyanoEkrani> {
   @override
+  void initState() {
+    super.initState();
+    // Ekranı yalnızca yatay moda kilitle
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    // Yönlendirmeyi varsayılan ayarına döndür
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
 
 
-    final player = AudioPlayer();
+
 
     // Beyaz tuşlara atanacak ses dosyaları
     final List<String> whiteKeySounds = [
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/kanunses/2kanunla.mp3',
-      'sounds/kanunses/3kanunsi.mp3',
-      'sounds/kanunses/4kanundo.mp3',
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/kanunses/1kanunsol.mp3',
-      'sounds/drumses/j.wav',
-      'sounds/drumses/k.wav',
-      'sounds/drumses/l.wav',
+      'sounds/piyanoses/2piyano.mp3',
+      'sounds/piyanoses/4piyano.mp3',
+      'sounds/piyanoses/6piyano.mp3',
+      'sounds/piyanoses/7piyano.mp3',
+      'sounds/piyanoses/9piyano.mp3',
+      'sounds/piyanoses/11piyano.mp3',
+      'sounds/piyanoses/13piyano.mp3',
+      'sounds/piyanoses/14piyano.mp3',
+      'sounds/piyanoses/16piyano.mp3',
+      'sounds/piyanoses/18piyano.mp3',
+      'sounds/piyanoses/19piyano.mp3',
+      'sounds/piyanoses/21piyano.mp3',
+      'sounds/piyanoses/23piyano.mp3',
+      'sounds/piyanoses/25piyano.mp3',
     ];
 
     // Siyah tuşlara atanacak ses dosyaları
     final List<String> blackKeySounds = [
-      'assets/do_sharp.wav',
-      'assets/re_sharp.wav',
-      'assets/fa_sharp.wav',
-      'assets/sol_sharp.wav',
-      'assets/la_sharp.wav',
-      'assets/do_sharp2.wav',
-      'assets/re_sharp2.wav',
-      'assets/fa_sharp2.wav',
-      'assets/sol_sharp2.wav',
-      'assets/la_sharp2.wav',
+      'sounds/piyanoses/3piyano.mp3',
+      'sounds/piyanoses/5piyano.mp3',
+      'sounds/piyanoses/8piyano.mp3',
+      'sounds/piyanoses/10piyano.mp3',
+      'sounds/piyanoses/12piyano.mp3',
+      'sounds/piyanoses/15piyano.mp3',
+      'sounds/piyanoses/17piyano.mp3',
+      'sounds/piyanoses/20piyano.mp3',
+      'sounds/piyanoses/22piyano.mp3',
+      'sounds/piyanoses/24piyano.mp3',
+
+
     ];
 
     // Siyah tuşların beyaz tuşlara göre konumu (true = siyah tuş var)
@@ -79,22 +99,17 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
       true,
       false
     ];
-    @override
-    void initState() {
-      super.initState();
-      // Ekranı yalnızca yatay moda kilitle
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-      ]);
+    // Ses dosyasını çalmak için yeni bir AudioPlayer nesnesi oluşturur
+    void playSound(String soundPath) {
+      final player = AudioPlayer();
+      player.play(AssetSource(soundPath));
+
+      // Ses tamamlandığında player'ı serbest bırak
+      player.onPlayerComplete.listen((event) {
+        player.dispose();
+      });
     }
 
-    @override
-    void dispose() {
-      // Yönlendirmeyi varsayılan ayarına döndür
-      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-      super.dispose();
-    }
 
 
     return Scaffold(
@@ -115,8 +130,8 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
                 children: [
                   // Beyaz tuş
                   GestureDetector(
-                    onTap: () async {
-                      await player.play(AssetSource(whiteKeySounds[index]));
+                    onTap: (){
+                      playSound(whiteKeySounds[index]);
                     },
                     child: Container(
                       width: 60,
@@ -133,8 +148,8 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
                       left: 30,
                       top: 0,
                       child: GestureDetector(
-                        onTap: () async {
-                          await player.play(AssetSource(blackKeySounds[index]));
+                        onTap: (){
+                          playSound(blackKeySounds[index]);
                         },
                         child: Container(
                           width: 50,
