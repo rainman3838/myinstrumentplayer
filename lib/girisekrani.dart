@@ -5,6 +5,7 @@ import 'bateriekrani.dart';
 import 'kalimbaekrani.dart';
 import 'kanunekrani.dart';
 import 'piyanoekrani.dart';
+import 'apiradyo.dart'; // Radyo ekranı import edildi.
 
 class GirisEkrani extends StatelessWidget {
   const GirisEkrani({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class GirisEkrani extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>  BateriEkrani()),
+                            builder: (context) => BateriEkrani()),
                       );
                     },
                   ),
@@ -80,7 +81,19 @@ class GirisEkrani extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const KalimbaEkrani()),
+                            builder: (context) => KalimbaEkrani()),
+                      );
+                    },
+                  ),
+                  // Yeni Radyo Ekranı
+                  InstrumentTile(
+                    imagePath: 'assets/images/img5.jpg', // Radyo görseli
+                    instrumentName: 'Radio',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ApiRadyo()), // ApiRadyo ekranına yönlendirme
                       );
                     },
                   ),
@@ -108,7 +121,6 @@ class InstrumentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -122,7 +134,7 @@ class InstrumentTile extends StatelessWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(15.0)),
+                const BorderRadius.vertical(top: Radius.circular(15.0)),
                 child: Image.asset(
                   imagePath,
                   fit: BoxFit.cover,

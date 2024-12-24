@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  dio: ^5.0.0
+  just_audio: ^0.9.42
 
 
 
@@ -38,6 +39,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   audioplayers: ^6.1.0
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -56,11 +58,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/images/img1.jpeg
-    - assets/images/img2.jpeg
-    - assets/images/img3.jpg
-    - assets/images/img4.jpg
-    - assets/images/imgkanun.jpg
+    - assets/images/
     - assets/sounds/drumses/
 
 
