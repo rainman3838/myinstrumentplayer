@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'girisekrani.dart';
+import 'wlecomepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const GirisEkrani(),
+      home:  WelcomeScreen(),
     );
   }
 }
