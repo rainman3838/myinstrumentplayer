@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myinstrumentplayer/apiradyo.dart';
+import 'package:myinstrumentplayer/radio_screen.dart';
 import 'package:myinstrumentplayer/girisekrani.dart';
 
 class MyApp extends StatelessWidget {
@@ -56,7 +56,7 @@ class WelcomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ApiRadyo()),
+                  MaterialPageRoute(builder: (context) => RadioScreen()),
                 );
               },
               child: Container(
