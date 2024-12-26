@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'services/radio_service.dart';
+import 'package:flutter/cupertino.dart';
 
 class RadioScreen extends StatefulWidget {
   const RadioScreen({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class _RadioScreenState extends State<RadioScreen> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   List<dynamic> _stations = [];
   bool _isLoading = true;
+  int _currentIndex = 0;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -39,8 +42,22 @@ class _RadioScreenState extends State<RadioScreen> {
     try {
       await _audioPlayer.setUrl(url);
       _audioPlayer.play();
+      setState(() {
+        _isPlaying = true;
+      });
     } catch (e) {
       print('Radyo oynatma hatası: $e');
+    }
+  }
+
+  void stopStation() async {
+    try {
+      await _audioPlayer.stop();
+      setState(() {
+        _isPlaying = false;
+      });
+    } catch (e) {
+      print('Radyo durdurma hatası: $e');
     }
   }
 
@@ -55,23 +72,52 @@ class _RadioScreenState extends State<RadioScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Radyo Dinle'),
+        backgroundColor: Colors.blueAccent,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-        itemCount: _stations.length,
-        itemBuilder: (context, index) {
-          final station = _stations[index]; // RadioStation nesnesi
-          return ListTile(
-            title: Text(station.name), // Doğrudan name özelliğine erişim
-            subtitle: Text('${station.country} - ${station.bitrate} kbps'), // country ve bitrate
-            onTap: () {
-              playStation(station.url); // URL'yi çalma
+          : Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (_stations.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Text(
+                _stations[_currentIndex].name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          CupertinoPicker(
+            itemExtent: 50,
+            onSelectedItemChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
             },
-          );
-        },
-      )
-
+            children: _stations
+                .map((station) => Center(
+              child: Text(
+                station.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ))
+                .toList(),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _isPlaying
+                ? stopStation
+                : () => playStation(_stations[_currentIndex].url),
+            child: Text(_isPlaying ? 'Stop Radio' : 'Start Radio'),
+          ),
+        ],
+      ),
     );
   }
 }
