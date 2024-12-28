@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'services/radio_service.dart';
-import 'package:flutter/cupertino.dart';
 
 class RadioScreen extends StatefulWidget {
   const RadioScreen({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _RadioScreenState extends State<RadioScreen> {
 
   Future<void> fetchStations() async {
     try {
-      final stations = await RadioService.fetchStationsByCountry('Germany');
+      final stations = await RadioService.fetchStationsByCountry('Türkiye');
       setState(() {
         _stations = stations;
         _isLoading = false;
@@ -71,52 +70,105 @@ class _RadioScreenState extends State<RadioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Radyo Dinle'),
-        backgroundColor: Colors.blueAccent,
+        title: const Text(
+          'Radyo Dinle',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.deepPurple,
+        elevation: 0,
+        centerTitle: true,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (_stations.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.deepPurple.shade700,
+              Colors.deepPurple.shade400,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: _isLoading
+            ? const Center(
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        )
+            : Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (_stations.isNotEmpty)
+              SizedBox(
+                height: 200,
+                child: ListWheelScrollView.useDelegate(
+                  itemExtent: 70,
+                  diameterRatio: 2,
+                  onSelectedItemChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  childDelegate: ListWheelChildBuilderDelegate(
+                    builder: (context, index) {
+                      if (index < 0 || index >= _stations.length) {
+                        return null;
+                      }
+                      final stationName = _stations[index].name;
+                      return Card(
+                        color: Colors.deepPurple.shade300,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              stationName,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: _stations.length,
+                  ),
+                ),
+              ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15, horizontal: 40),
+                backgroundColor: _isPlaying
+                    ? Colors.redAccent
+                    : Colors.greenAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: _isPlaying
+                  ? stopStation
+                  : () => playStation(_stations[_currentIndex].url),
               child: Text(
-                _stations[_currentIndex].name,
+                _isPlaying ? 'Radyo Durdur' : 'Radyo Başlat',
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-          CupertinoPicker(
-            itemExtent: 50,
-            onSelectedItemChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            children: _stations
-                .map((station) => Center(
-              child: Text(
-                station.name,
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ))
-                .toList(),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _isPlaying
-                ? stopStation
-                : () => playStation(_stations[_currentIndex].url),
-            child: Text(_isPlaying ? 'Stop Radio' : 'Start Radio'),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
