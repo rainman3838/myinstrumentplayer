@@ -135,6 +135,7 @@ class _RadioScreenState extends State<RadioScreen> {
         title: const Text(
           'Radyo Dinle',
           style: TextStyle(
+            color: Colors.white,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
           ),

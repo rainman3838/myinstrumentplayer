@@ -69,62 +69,78 @@ class _KalimbaEkraniState extends State<KalimbaEkrani> {
     ];
 
     return Scaffold(
-      body: Container(
-        height: 500,
-        decoration: BoxDecoration(
-          // Arka plan için ahşap doku
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF8B4513), // Ahşap açık kahverengi
-              Color(0xFFA0522D), // Ahşap koyu kahverengi
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(keyHeights.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                playSound(soundPaths[index]);
-              },
-              child: Container(
-                width: 40,
-                // Tuş genişliği sabit
-                height: keyHeights[index].toDouble(),
-                // Uzunluk listeden alınıyor
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  // Parlayan gümüş efektli tuşlar
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey.shade300,
-                      Colors.grey.shade700,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white.withOpacity(0.8),
-                      offset: Offset(-2, -2),
-                      blurRadius: 4,
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      offset: Offset(2, 2),
-                      blurRadius: 4,
-                    ),
-                  ],
-                  border: Border.all(color: Colors.black, width: 3),
-                  borderRadius: BorderRadius.circular(5),
-                ),
+      body: Stack(
+        children: [
+          Container(
+            height: 500,
+            decoration: BoxDecoration(
+              // Arka plan için ahşap doku
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF8B4513), // Ahşap açık kahverengi
+                  Color(0xFFA0522D), // Ahşap koyu kahverengi
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-            );
-          }),
-        ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(keyHeights.length, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    playSound(soundPaths[index]);
+                  },
+                  child: Container(
+                    width: 40,
+                    // Tuş genişliği sabit
+                    height: keyHeights[index].toDouble(),
+                    // Uzunluk listeden alınıyor
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      // Parlayan gümüş efektli tuşlar
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.grey.shade300,
+                          Colors.grey.shade700,
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.8),
+                          offset: Offset(-2, -2),
+                          blurRadius: 4,
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                      border: Border.all(color: Colors.black, width: 3),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          Positioned(
+            left: 310,
+            bottom: -220,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

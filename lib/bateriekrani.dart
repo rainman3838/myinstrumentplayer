@@ -13,18 +13,18 @@ class BateriEkrani extends StatelessWidget {
 
 class DrumPadScreen extends StatelessWidget {
   final List<String> soundPaths = [
-    'sounds/drumses/a.wav',
-    'sounds/drumses/b.wav',
-    'sounds/drumses/c.wav',
-    'sounds/drumses/d.wav',
-    'sounds/drumses/e.wav',
-    'sounds/drumses/f.wav',
-    'sounds/drumses/g.wav',
-    'sounds/drumses/h.wav',
-    'sounds/drumses/i.wav',
-    'sounds/drumses/j.wav',
-    'sounds/drumses/k.wav',
-    'sounds/drumses/l.wav',
+    'sounds/drumses/Clap.wav',
+    'sounds/drumses/Crash.wav',
+    'sounds/drumses/High Tom.wav',
+    'sounds/drumses/Hihat C.wav',
+    'sounds/drumses/Hihat O.wav',
+    'sounds/drumses/Kick.wav',
+    'sounds/drumses/Low Tom.wav',
+    'sounds/drumses/Mid Tom.wav',
+    'sounds/drumses/Rimshot.wav',
+    'sounds/drumses/Snare.wav',
+    'sounds/drumses/Kick.wav',
+    'sounds/drumses/Hihat O.wav',
   ];
 
   final List<List<Color>> gradientColors = [

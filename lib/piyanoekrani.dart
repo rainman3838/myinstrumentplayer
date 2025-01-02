@@ -71,15 +71,16 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
       'sounds/piyanoses/3piyano.mp3',
       'sounds/piyanoses/5piyano.mp3',
       'sounds/piyanoses/8piyano.mp3',
+      'sounds/piyanoses/8piyano.mp3',
       'sounds/piyanoses/10piyano.mp3',
       'sounds/piyanoses/12piyano.mp3',
       'sounds/piyanoses/15piyano.mp3',
+      'sounds/piyanoses/15piyano.mp3',
+      'sounds/piyanoses/17piyano.mp3',
       'sounds/piyanoses/17piyano.mp3',
       'sounds/piyanoses/20piyano.mp3',
       'sounds/piyanoses/22piyano.mp3',
       'sounds/piyanoses/24piyano.mp3',
-
-
     ];
 
     // Siyah tuşların beyaz tuşlara göre konumu (true = siyah tuş var)
