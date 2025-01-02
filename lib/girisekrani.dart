@@ -17,6 +17,7 @@ class GirisEkrani extends StatelessWidget {
             child: Image.asset(
               'assets/images/Enstruman.png',
               fit: BoxFit.cover,
+
             ),
           ),
           // Instrument buttons
@@ -24,6 +25,7 @@ class GirisEkrani extends StatelessWidget {
             top: 260,
             left: 70,
             child: InstrumentButton(
+
               label: 'Piano',
               onTap: () {
                 Navigator.push(

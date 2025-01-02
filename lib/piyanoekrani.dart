@@ -119,50 +119,47 @@ class _PiyanoEkraniState extends State<PiyanoEkrani> {
         title: const Text('Piyano Uygulaması'),
       ),
       body: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(14, (index) {
-              final hasSharp = isSharpKey[index];
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(14, (index) {
+            final hasSharp = isSharpKey[index];
 
-              return Stack(
-                children: [
-                  // Beyaz tuş
-                  GestureDetector(
-                    onTap: (){
-                      playSound(whiteKeySounds[index]);
-                    },
-                    child: Container(
-                      width: 60,
-                      height: 270,
-                      color: Colors.white,
-                      margin: const EdgeInsets.all(0.5),
-                      alignment: Alignment.bottomCenter,
-                    ),
+            return Stack(
+              children: [
+                // Beyaz tuş
+                GestureDetector(
+                  onTap: (){
+                    playSound(whiteKeySounds[index]);
+                  },
+                  child: Container(
+                    width: 60,
+                    height: 270,
+                    color: Colors.white,
+                    margin: const EdgeInsets.all(0.5),
+                    alignment: Alignment.bottomCenter,
                   ),
+                ),
 
-                  // Siyah tuş (Eğer konum uygunsa)
-                  if (hasSharp && index <= 12)
-                    Positioned(
-                      left: 30,
-                      top: 0,
-                      child: GestureDetector(
-                        onTap: (){
-                          playSound(blackKeySounds[index]);
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 160,
-                          color: Colors.black,
-                          alignment: Alignment.bottomCenter,
-                        ),
+                // Siyah tuş (Eğer konum uygunsa)
+                if (hasSharp && index <= 12)
+                  Positioned(
+                    left: 30,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: (){
+                        playSound(blackKeySounds[index]);
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 160,
+                        color: Colors.black,
+                        alignment: Alignment.bottomCenter,
                       ),
                     ),
-                ],
-              );
-            }),
-          ),
+                  ),
+              ],
+            );
+          }),
         ),
       ),
     );
